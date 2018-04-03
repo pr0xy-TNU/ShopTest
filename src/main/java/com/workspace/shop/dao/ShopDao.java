@@ -18,23 +18,31 @@ import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestBody;
 
 
 @Repository
+//@ComponentScan(value = {"com.workspace.shop.dao", "com.workspace.shop.service"})
 public class ShopDao implements IShopDao {
 
-    public static final Logger logger = LoggerFactory.getLogger(ShopDao.class);
-    @PersistenceContext(unitName = "persistenceUnit")
-    transient EntityManager manager;
+    private Logger logger = LoggerFactory.getLogger(ShopDao.class);
+    @PersistenceContext(name = "persistance-unit")
+    private EntityManager manager;
 
     @Override
     public List<ShopEntity> getAllShops() {
         CriteriaQuery<ShopEntity> query = manager.getCriteriaBuilder()
             .createQuery(ShopEntity.class);
         Root<ShopEntity> entityRoot = query.from(ShopEntity.class);
-        return manager.createQuery(query).getResultList();
+        List<ShopEntity> entities = manager.createQuery(query).getResultList();
+        if (entities != null && !entities.isEmpty()) {
+            logger.info("Display all shops");
+            return entities;
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -48,20 +56,21 @@ public class ShopDao implements IShopDao {
             .add(Projections.property("address"))
             .add(Projections.property("shopName"))
             .add(Projections.property("owner"))
-            .add(Projections.property("customerDensity"));
+            .add(Projections.property("customersDensity"));
 
         criteria.add(Restrictions.eq("id", id));
         criteria.setProjection(projections);
         @SuppressWarnings("unchecked")
         List<Object[]> objects = (List<Object[]>) criteria.list();
         if (objects != null && !objects.isEmpty()) {
+            logger.info("Shop with id " + id + " was founded..");
             Object[] temp = objects.get(0);
             int _id = (int) temp[0];
             String address = (String) temp[1];
             String shopName = (String) temp[2];
             String owner = (String) temp[3];
             Double density = (double) temp[4];
-            return new ShopEntity(id, address, density, shopName, owner);
+            return new ShopEntity(_id, address, density, shopName, owner);
         } else {
             return null;
         }
@@ -70,6 +79,9 @@ public class ShopDao implements IShopDao {
     @Override
     public int save(ShopEntity shopEntity) {
         ShopEntity flagEntity = manager.merge(shopEntity);
+        if (flagEntity !=null){
+            logger.info("Shop was added");
+        }
         return flagEntity == null ? 0 : 1;
     }
 

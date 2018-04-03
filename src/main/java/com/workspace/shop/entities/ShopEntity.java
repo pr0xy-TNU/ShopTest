@@ -34,7 +34,6 @@ public class ShopEntity {
 
     public ShopEntity(String address, Double customersDensity, String shopName,
         String owner) {
-        this.id = id;
         this.address = address;
         this.customersDensity = customersDensity;
         this.shopName = shopName;

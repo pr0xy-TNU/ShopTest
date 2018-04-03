@@ -1,6 +1,7 @@
 package com.workspace.shop.controlles;
 
 import com.workspace.shop.entities.ShopEntity;
+import com.workspace.shop.service.IShopService;
 import com.workspace.shop.service.ShopService;
 
 import java.util.List;
@@ -20,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ShopController {
 
     @Autowired
-    private ShopService shopService;
+    private IShopService shopService;
     public final Logger logger = LoggerFactory.getLogger(ShopController.class);
 
     @RequestMapping(value = "/shops", method = RequestMethod.GET)
@@ -28,9 +29,9 @@ public class ShopController {
     public ResponseEntity<List<ShopEntity>> findAll() {
         List<ShopEntity> list = shopService.getAllShops();
         if (list != null && !list.isEmpty()) {
-            return new ResponseEntity<List<ShopEntity>>(list, HttpStatus.OK);
+            return new ResponseEntity<>(list, HttpStatus.OK);
         }
-        return new ResponseEntity<List<ShopEntity>>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @RequestMapping(value = "/shops/{id}", method = RequestMethod.GET)
@@ -38,7 +39,7 @@ public class ShopController {
     public ResponseEntity<ShopEntity> findOne(@PathVariable("id") int id) {
         ShopEntity queryResult = shopService.getShopById(id);
         if (queryResult != null) {
-            return new ResponseEntity<ShopEntity>(queryResult, HttpStatus.OK);
+            return new ResponseEntity<>(queryResult, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -50,7 +51,7 @@ public class ShopController {
         ShopEntity entity = shopService.findById(id);
         if (entity != null) {
             shopService.update(id, shopEntity);
-            return new ResponseEntity<ShopEntity>(entity, HttpStatus.OK);
+            return new ResponseEntity<>(entity, HttpStatus.OK);
         }
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

@@ -47,13 +47,6 @@ public class DatabaseConfig {
 
 
     @Bean
-    public LocalEntityManagerFactoryBean geEntityManagerFactoryBean() {
-        LocalEntityManagerFactoryBean factoryBean = new LocalEntityManagerFactoryBean();
-        factoryBean.setPersistenceUnitName("localPersistence");
-        return factoryBean;
-    }
-
-    @Bean
     public DataSource dataSource() {
         BasicDataSource ds = new BasicDataSource();
         ds.setUrl(env.getRequiredProperty("db.url"));
@@ -94,16 +87,6 @@ public class DatabaseConfig {
             throw new IllegalArgumentException("Can't find 'hibernate.properties' in classpath!",
                 e);
         }
-    }
-
-    @Bean
-    public IShopService getShopService() {
-        return new ShopService();
-    }
-
-    @Bean
-    public IShopDao getShopDao() {
-        return new ShopDao();
     }
 
 }
