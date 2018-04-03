@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
+
+  <persistence-unit name="localPersistence" transaction-type="RESOURCE_LOCAL">
+    <description>Spring Hibernate JPA Configuration Example</description>
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+
+    <class>com.workspace.shop.entities.ShopEntity</class>
+    <properties>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.url"
+        value="jdbc:mysql://localhost:3306/jpa_test_db?useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.password" value="root"/>
+      <property name="hibernate.show_sql" value="false"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+    </properties>
+  </persistence-unit>
+</persistence>
