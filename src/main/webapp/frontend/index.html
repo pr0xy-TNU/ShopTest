@@ -1,0 +1,63 @@
+<html ng-app="myApp">
+<head>
+    <title>
+
+    </title>
+    <link rel="stylesheet" href="css/style.css" type="text/css"/>
+    <script src="script/angular.min%20.1.5.3.js"></script>
+    <script src="script/app.js"></script>
+    <script src="script/app.js"></script>
+</head>
+<body>
+<div ng-controller="firstCtrl">
+    <form>
+        <label for="userName">Enter a user name: </label>
+        <input id="userName" type="text" ng-model="userName">
+        <button ng-click="addToUserList()">Add user</button>
+        </br>
+        </br>
+        </br>
+        </br>
+        <label for="userFilterValue">Enter the filter value</label>
+        <input id="userFilterValue" type="text" ng-model="userFilterValue">
+    </form>
+    <div>
+        <p ng-repeat="item in userArray">{{item.name + " " + item.country}}
+            <button ng-click="removeUserFromList(item)">Delete</button>
+        </p>
+    </div>
+    <div ng-controller="httpCustomerController">
+        <br>
+        <label for="findById">Shops from web-site</label>
+        <input type="text" ng-model="userId" id="findById">
+        <p>{{userId}}</p>
+        <button id="" ng-click="findShopById(userId)">Find</button>
+        <br>
+        <label ng-model="responseStatus">Status: {{responseStatus}}</label></br>
+        <label ng-model="responseData">Data from server: {{responseData}}</label>
+        <ul>
+            <li>
+                {{responseData.address}}
+            </li>
+            <li>
+                {{responseData.id}}
+            </li>
+            <li>
+                {{responseData.shop_name}}
+            </li>
+            <li>
+                {{responseData.customers_density}}
+            </li>
+            <li>
+                {{responseData.owner}}
+            </li>
+
+        </ul>
+    </div>
+</div>
+<div w3-test-directive=""></div>
+<div show-some-info=""></div>
+
+
+</body>
+</html>

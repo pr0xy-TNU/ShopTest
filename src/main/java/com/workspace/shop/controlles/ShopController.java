@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,6 +25,7 @@ public class ShopController {
     private IShopService shopService;
     public final Logger logger = LoggerFactory.getLogger(ShopController.class);
 
+    @CrossOrigin
     @RequestMapping(value = "/shops", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<List<ShopEntity>> findAll() {
@@ -34,6 +36,7 @@ public class ShopController {
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/shops/{id}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<ShopEntity> findOne(@PathVariable("id") int id) {
@@ -45,6 +48,7 @@ public class ShopController {
         }
     }
 
+    @CrossOrigin
     @RequestMapping(value = "/shops/{id}", method = RequestMethod.PUT)
     public ResponseEntity<ShopEntity> update(@PathVariable("id") int id,
         @RequestParam ShopEntity shopEntity) {
